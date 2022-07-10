@@ -1,0 +1,44 @@
+<h1 class="container">.....Hero-form..........</h1>
+<!-- ngfor:
+index: xác định chỉ số hiện tại của vòng lặp tương ứng.
+first:  xác định vòng lặp hiện tại có phải là vòng lặp đầu tiên không -> true : false.
+last:xác định vòng lặp hiện tại có phải là vòng lặp cuối cùng không -> true : false.
+even: xác định vòng lặp hiện tại có phải là vòng lặp có chỉ số chẵn không -> true : false.
+odd: xác định vòng lặp hiện tại có phải là vòng lặp có chỉ số lẻ không -> true : false. -->
+<div class="form-group container">
+  <!-- heroForm variable is now a reference to the NgForm directive instance
+to governs (chi phoi) the form . -->
+  <form #heroForm="ngForm">
+    <!-- name -->
+    <input type="text" class="form-control" id="name" required [(ngModel)]="model.name" name="name">
+    TODO: remove this: {{model.name}}
+
+    <!-- selection -->
+    <br /><br />
+    <label for="power">Hero Power</label>
+    <select class="form-control" id="power" required>
+      <option *ngFor="let pow of powers" [value]="pow">{{pow}}</option>
+    </select>
+  </form>
+</div>
+
+<!-- json pipe: data to a string->json -->
+///////////////{{ model | json }}/////////////////////
+<div class="form-group container">
+  <!-- for vs id có chung tên để khớp nhãn với nhau
+       name: uses to register the control with the form.-->
+  <label for="name">Name</label>
+  <input type="text" class="form-control" id="name" required [(ngModel)]="model.name" name="name">
+</div>
+
+<div class="form-group container">
+  <label for="alterEgo">Alter Ego</label>
+  <input type="text" class="form-control" id="alterEgo" [(ngModel)]="model.alterEgo" name="alterEgo">
+</div>
+
+<div class="form-group container">
+  <label for="power">Hero Power</label>
+  <select class="form-control" id="power" required [(ngModel)]="model.power" name="power">
+    <option *ngFor="let pow of powers" [value]="pow">{{pow}}</option>
+  </select>
+</div>
