@@ -1,44 +1,84 @@
-<h1 class="container">.....Hero-form..........</h1>
 <!-- ngfor:
 index: xác định chỉ số hiện tại của vòng lặp tương ứng.
 first:  xác định vòng lặp hiện tại có phải là vòng lặp đầu tiên không -> true : false.
 last:xác định vòng lặp hiện tại có phải là vòng lặp cuối cùng không -> true : false.
 even: xác định vòng lặp hiện tại có phải là vòng lặp có chỉ số chẵn không -> true : false.
 odd: xác định vòng lặp hiện tại có phải là vòng lặp có chỉ số lẻ không -> true : false. -->
-<div class="form-group container">
-  <!-- heroForm variable is now a reference to the NgForm directive instance
+<!-- <div class="form-group container"> -->
+<!-- heroForm variable is now a reference to the NgForm directive instance
 to governs (chi phoi) the form . -->
-  <form #heroForm="ngForm">
-    <!-- name -->
+<!-- <form (ngSubmit)="onSubmit()" #heroForm="ngForm">
+    name
     <input type="text" class="form-control" id="name" required [(ngModel)]="model.name" name="name">
     TODO: remove this: {{model.name}}
 
-    <!-- selection -->
-    <br /><br />
+    selection -->
+<!-- <br /><br />
     <label for="power">Hero Power</label>
     <select class="form-control" id="power" required>
       <option *ngFor="let pow of powers" [value]="pow">{{pow}}</option>
-    </select>
+    </select> -->
+<!-- </form> -->
+<!-- </div> -->
+
+
+
+
+<div [hidden]="submitted">
+
+  <h1 class="container text-center">.....Hero-form..........</h1>
+  <!-- json pipe: data to a string->json -->
+  <div class="container text-left pt-8">
+    ///////////////{{ model | json }}/////////////////////
+  </div>
+
+  <form (ngSubmit)="onSubmit()" #heroForm="ngForm">
+    <div class="form-group container">
+      <!-- for vs id có chung tên để khớp nhãn với nhau
+       name: uses to register the control with the form.-->
+      <label for="name">Name</label>
+      <input type="text" class="form-control" id="name" required [(ngModel)]="model.name" name="name" #name="ngModel">
+      <div [hidden]="name.valid || name.pristine" class="alert alert-danger">
+        Name is required
+      </div>
+    </div>
+
+    <div class="form-group container">
+      <label for="alterEgo">Alter Ego</label>
+      <input type="text" class="form-control" id="alterEgo" [(ngModel)]="model.alterEgo" name="alterEgo">
+      <!-- #alterEgo="ngModel"> -->
+      <!-- <div [hidden]="alterEgo.valid|| name.pristine" class="alert alert-danger"> Alter Ego is required</div> -->
+    </div>
+
+    <div class="form-group container">
+      <label for="power">Hero Power</label>
+      <select class="form-control" id="power" required [(ngModel)]="model.power" name="power">
+        <option *ngFor="let pow of powers" [value]="pow">{{pow}}</option>
+      </select>
+    </div>
+
+
+    <!-- ///button -->
+    <div class="container text-center">
+      <button type="button" class="btn btn-default " (click)="newHero(); heroForm.reset()">New Hero</button>
+      <button type="submit" class="btn btn-success" [disabled]="!heroForm.form.valid">Submit</button>
+    </div>
   </form>
 </div>
-
-<!-- json pipe: data to a string->json -->
-///////////////{{ model | json }}/////////////////////
-<div class="form-group container">
-  <!-- for vs id có chung tên để khớp nhãn với nhau
-       name: uses to register the control with the form.-->
-  <label for="name">Name</label>
-  <input type="text" class="form-control" id="name" required [(ngModel)]="model.name" name="name">
-</div>
-
-<div class="form-group container">
-  <label for="alterEgo">Alter Ego</label>
-  <input type="text" class="form-control" id="alterEgo" [(ngModel)]="model.alterEgo" name="alterEgo">
-</div>
-
-<div class="form-group container">
-  <label for="power">Hero Power</label>
-  <select class="form-control" id="power" required [(ngModel)]="model.power" name="power">
-    <option *ngFor="let pow of powers" [value]="pow">{{pow}}</option>
-  </select>
+<div [hidden]="!submitted">
+  <h2>You submitted the following:</h2>
+  <div class="row">
+    <div class="col-xs-3">Name</div>
+    <div class="col-xs-9">{{ model.name }}</div>
+  </div>
+  <div class="row">
+    <div class="col-xs-3">Alter Ego</div>
+    <div class="col-xs-9">{{ model.alterEgo }}</div>
+  </div>
+  <div class="row">
+    <div class="col-xs-3">Power</div>
+    <div class="col-xs-9">{{ model.power }}</div>
+  </div>
+  <br>
+  <button type="button" class="btn btn-primary" (click)="submitted=false">Edit</button>
 </div>
